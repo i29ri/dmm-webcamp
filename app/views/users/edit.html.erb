@@ -1,0 +1,21 @@
+<h1>User info</h1>
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+  <h2><%= @user.errors.count %>error</h2>
+
+    <% @user.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+<% end %>
+
+<%= form_with model:@user, local:true do |f| %>
+
+  <p>Name</p>
+  <%= f.text_field :name, autofocus: true, class:"form-control", id:"inputEmail", placeholder:"名前"%>
+  <p>Image</p>
+  <%= f.attachment_field :profile_image %>
+  <p>Introduction</p>
+  <%= f.text_field :introduction, autofocus: true, class:"form-control", id:"inputEmail", placeholder:"自己紹介"%>
+
+  <%= f.submit "Update User" %>
+<% end %>

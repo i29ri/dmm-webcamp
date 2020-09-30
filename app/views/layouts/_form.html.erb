@@ -1,0 +1,66 @@
+<div class="container">
+<div class="row">
+ <div class="col-xs-3">
+   
+<% if @book.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= @book.errors.count %>件のerrorが発生しました。</h2>
+    <ul>
+    <% @book.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
+  <% if user_signed_in? %>
+    <div>
+      <h2>User info</h2>
+      <%= attachment_image_tag user, :profile_image, fallback: "no_image.jpg", style: "width: 100px; height: 100px; margin-top: 20px;" %>
+      <table class="table">
+        <tr>
+          <td>name</td>
+          <td><%= current_user.name %></td>
+        </tr>
+
+        <tr>
+          <td>introduction</td>
+          <td><%= current_user.introduction %></td>
+        </tr>
+      </table>
+
+      <%= link_to "編集", edit_user_path(id: current_user.id), class: "btn btn-default btn-block glyphicon glyphicon-subscript" %>
+
+    </div>
+
+    <div>
+      <h2>New book</h2>
+
+     <%= form_with model: @book, local: true do |f| %>
+      <div class="newform">
+
+       <div class="field">
+          <p>Title</p>
+          <%= f.text_field :title %>
+        </div>
+
+        <div class="field">
+          <p>Opinion</p>
+          <%= f.text_area :body %>
+        </div>
+
+        <div class="field">
+          <p> <%= f.submit 'Create Book', class: "btn btn-default btn-block" %></p>
+        </div>
+
+      <% end %>
+
+      </div>
+  </div>
+  <% else %>
+  <%# ログインしてなかったときは/に返すので無記入%>
+  <% end %>
+  </div>
+
+
